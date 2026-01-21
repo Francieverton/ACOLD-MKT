@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cold Marketplace | Mães Empreendedoras</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo" onclick="app.router('home')">
+            ❄️ Cold<span>MKT</span>
+        </div>
+        <div class="nav-links">
+            <button class="theme-toggle" id="themeBtn" title="Alternar Tema">🌙</button>
+            <div id="guest-nav">
+                <button class="nav-btn" onclick="app.router('login')">Entrar</button>
+                <button class="btn-primary" onclick="app.router('register')">Cadastrar</button>
+            </div>
+            <div id="user-nav" style="display: none;">
+                <span id="user-greeting" class="nav-btn">Olá, Usuário</span>
+                <button id="dashboard-btn" class="nav-btn" onclick="app.router('dashboard')" style="display:none">Meus
+                    Produtos</button>
+                <button class="btn-outline" onclick="app.logout()">Sair</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <div id="home-screen" class="screen active">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h1 style="font-size: 2.5rem; margin-bottom: 10px;">Feito por Mães, com <span
+                        style="color:var(--accent)">Amor</span>.</h1>
+                <p style="color: var(--text-secondary);">Apoie o tratamento oncológico comprando produtos artesanais
+                    únicos.</p>
+            </div>
+            <div id="product-grid" class="grid">
+            </div>
+        </div>
+
+        <div id="seller-profile-screen" class="screen">
+            <button onclick="app.router('home')"
+                style="margin-bottom: 20px; color: var(--primary); background: none;">&larr; Voltar para Loja</button>
+            <div class="dashboard-header">
+                <div>
+                    <h2 id="profile-name">Loja da Mãe</h2>
+                    <p style="color: var(--text-secondary);">Produtos exclusivos desta vendedora.</p>
+                </div>
+            </div>
+            <div id="seller-grid" class="grid"></div>
+        </div>
+
+        <div id="login-screen" class="screen">
+            <div class="form-box">
+                <h2 style="margin-bottom: 20px; text-align: center;">Bem-vindo de volta</h2>
+                <form onsubmit="app.handleLogin(event)">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="login-email" class="form-control" required
+                            placeholder="ex: maria@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Senha</label>
+                        <input type="password" id="login-pass" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">Entrar</button>
+                </form>
+                <p style="margin-top: 15px; text-align: center; font-size: 0.9rem;">
+                    Ainda não tem conta? <a href="#" onclick="app.router('register')"
+                        style="color: var(--primary);">Cadastre-se</a>
+                </p>
+            </div>
+        </div>
+
+        <div id="register-screen" class="screen">
+            <div class="form-box">
+                <h2 style="margin-bottom: 20px; text-align: center;">Criar Conta</h2>
+                <form onsubmit="app.handleRegister(event)">
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" id="reg-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="reg-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Senha</label>
+                        <input type="password" id="reg-pass" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Eu sou:</label>
+                        <select id="reg-type" class="form-control">
+                            <option value="client">Cliente (Quero Comprar)</option>
+                            <option value="seller">Mãe Vendedora (Quero Vender)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">Cadastrar</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="dashboard-screen" class="screen">
+            <div class="dashboard-header">
+                <h2>Painel da Vendedora</h2>
+                <span style="color: var(--text-secondary)">Gerencie seus produtos</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 30px;">
+                <div class="card" style="padding: 20px; height: fit-content;">
+                    <h3 style="margin-bottom: 15px;">Novo Produto</h3>
+                    <form onsubmit="app.handleAddProduct(event)">
+                        <div class="form-group">
+                            <label>Nome do Produto</label>
+                            <input type="text" id="prod-name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>URL da Imagem</label>
+                            <input type="url" id="prod-img" class="form-control" placeholder="https://..." required>
+                        </div>
+                        <div class="form-group">
+                            <label>Preço (R$)</label>
+                            <input type="number" id="prod-price" step="0.01" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Estoque</label>
+                            <input type="number" id="prod-stock" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Descrição Curta</label>
+                            <textarea id="prod-desc" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" id="prod-preorder">
+                            <label style="margin:0; font-weight: 400;">Sob Encomenda</label>
+                        </div>
+                        <button type="submit" class="btn-primary" style="width: 100%;">Adicionar Produto</button>
+                    </form>
+                </div>
+
+                <div>
+                    <h3 style="margin-bottom: 15px;">Seus Produtos Ativos</h3>
+                    <div id="seller-products-list" class="grid"
+                        style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <div id="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
