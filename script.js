@@ -100,7 +100,7 @@ const app = {
                 <div id="menu-overlay" class="menu-overlay" onclick="app.closeMenu()"></div>
                 <header class="app-header">
                     <div id="menu-toggle" class="menu-toggle" onmouseenter="app.openMenu()" onclick="app.openMenu()"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
-                    <div class="header-logo">Cold MarketPlace</div>
+                    <div class="header-logo"><img src="img/Acold_Imagem.png" alt="ACOLD Logo" class="header-logo-img"> MarketPlace</div>
                 </header>
                 <aside id="app-sidebar" class="app-sidebar" onmouseleave="app.closeMenu()">
                     <div class="sidebar-header">
@@ -108,8 +108,10 @@ const app = {
                         <button class="close-sidebar" onclick="app.closeMenu()">×</button>
                     </div>
                     <div class="sidebar-content">
-                        <a href="#" onclick="app.router('home'); app.closeMenu(); return false;" class="sidebar-link">🏠 Início</a>
-                        <div id="sidebar-dynamic-links"></div>
+                        <div class="sidebar-links-wrapper">
+                            <a href="#" onclick="app.router('home'); app.closeMenu(); return false;" class="sidebar-link"><svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Início</a>
+                            <div id="sidebar-dynamic-links"></div>
+                        </div>
                         <div class="sidebar-footer">
                             <button id="sidebarThemeBtn" class="theme-btn">🌗 Alternar Tema</button>
                         </div>
@@ -171,17 +173,17 @@ const app = {
             let linksHtml = `<div class="user-info-sidebar">Olá, ${app.data.currentUser.name.split(' ')[0]}</div>`;
             if (app.data.currentUser.type === 'seller') {
                 if(dashBtn) dashBtn.style.display = 'inline-block';
-                linksHtml += `<a href="#" onclick="app.router('dashboard'); app.closeMenu(); return false;" class="sidebar-link">📊 Painel Vendedora</a>`;
+                linksHtml += `<a href="#" onclick="app.router('dashboard'); app.closeMenu(); return false;" class="sidebar-link"> Painel Vendedora</a>`;
             }
-            linksHtml += `<a href="#" onclick="app.logout(); app.closeMenu(); return false;" class="sidebar-link">🚪 Sair</a>`;
+            linksHtml += `<a href="#" onclick="app.logout(); app.closeMenu(); return false;" class="sidebar-link"> Sair</a>`;
             if(sidebarLinks) sidebarLinks.innerHTML = linksHtml;
 
         } else {
             if(guestNav) guestNav.style.display = 'flex';
             if(userNav) userNav.style.display = 'none';
             if(sidebarLinks) sidebarLinks.innerHTML = `
-                <a href="#" onclick="app.router('login'); app.closeMenu(); return false;" class="sidebar-link">🔑 Login</a>
-                <a href="#" onclick="app.router('register'); app.closeMenu(); return false;" class="sidebar-link">📝 Cadastro</a>
+                <a href="#" onclick="app.router('login'); app.closeMenu(); return false;" class="sidebar-link"><svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Login</a>
+                <a href="#" onclick="app.router('register'); app.closeMenu(); return false;" class="sidebar-link"><svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="5" r="4"/><path d="M17 19h6m-3-3v6"/></svg> Cadastro</a>
             `;
         }
     },
@@ -258,7 +260,8 @@ const app = {
                 display: flex; align-items: center; padding: 0 20px; z-index: 1000;
                 box-sizing: border-box;
             }
-            .header-logo { font-size: 1.5rem; font-weight: bold; color: var(--text); margin-left: 15px; }
+            .header-logo { font-size: 1.5rem; font-weight: bold; color: var(--text); margin-left: 15px; display: flex; align-items: center; gap: 10px; }
+            .header-logo-img { height: 60px; width: auto; }
 
             .menu-toggle {
                 cursor: pointer; padding: 5px; background: transparent;
@@ -286,13 +289,15 @@ const app = {
             .sidebar-header h2 { margin: 0; color: var(--primary); font-size: 1.5rem; }
             .close-sidebar { background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--text); }
             
-            .sidebar-content { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+            .sidebar-content { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 0; }
+            .sidebar-links-wrapper { display: flex; flex-direction: column; gap: 10px; }
             .sidebar-link {
                 display: block; padding: 12px 15px; text-decoration: none;
                 color: #333; font-weight: 500; border-radius: 8px;
-                transition: background 0.2s;
+                transition: background 0.2s; display: flex; align-items: center; gap: 10px;
             }
             .sidebar-link:hover { background: #f0f0f0; color: var(--primary); }
+            .sidebar-icon { width: 20px; height: 20px; }
             .user-info-sidebar { padding: 10px 15px; font-weight: bold; color: var(--primary); margin-bottom: 10px; border-bottom: 1px solid #eee; }
             
             .sidebar-footer { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border-color); }

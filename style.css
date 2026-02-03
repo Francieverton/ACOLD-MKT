@@ -89,6 +89,13 @@
        gap: 8px;
    }
 
+   .logo-img {
+       height: 50px;
+       width: auto;
+       display: flex;
+       align-items: center;
+   }
+
    .logo span {
        color: var(--accent);
    }
